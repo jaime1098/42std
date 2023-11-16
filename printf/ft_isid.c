@@ -14,13 +14,13 @@
 #include "libft.h"
 #include "libftprintf.h"
 
-int ft_isid(va_list args)
+int	ft_isid(va_list args)
 {
-	int n;
-	char *itoa;
+	int		n;
+	char	*itoa;
 
 	n = va_arg(args, int);
 	ft_putnbr_fd(n, 1);
-	itoa = ft_itoa(n)
+	itoa = ft_itoa(n);
 	return (ft_strlen(itoa));
 }

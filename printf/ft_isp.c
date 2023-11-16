@@ -1,26 +1,51 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_isp.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: joltra-r <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/11 19:29:40 by joltra-r          #+#    #+#             */
+/*   Updated: 2023/11/11 19:29:42 by joltra-r         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdarg.h>
 #include "libft.h"
 #include "libftprintf.h"
 
-int ft_isp(va_list args)
+int	ft_isp(va_list args)
 {
-        void *p;
+	void	*p;
 
-				p = va_arg(args, void *);
-        char *str = ft_itoa_base((unsigned long)p, 16);
-        ft_putstr_fd("0x", 1);
-        ft_putstr_fd(str, 1);
-    }
+	p = va_arg(args, void *);
+	ft_putstr_fd("0x", 1);
+	ft_decimaltohexadecimalx((unsigned int)p);
+}
 
-char *ft_itoa_base(unsigned long n, int base)
+int	ft_decimaltohexadecimalx(unsigned int decimal)
 {
-    static char *base_chars = "0123456789abcdef";
-    static char buffer[50];
-    char *p = buffer + sizeof(buffer) - 1;
-    *p = '\0';
-    do {
-        *--p = base_chars[n % base];
-        n /= base;
-    } while (n != 0);
-    return p;
+	char	hexadecimal[20];
+	int		i;
+	int		aux;
+
+	i = 0;
+	while (decimal != 0)
+	{
+		aux = decimal % 16;
+		if (aux < 10)
+			hexadecimal[i] = aux + '0';
+		else
+			hexadecimal[i] = aux + 'a' - 10;
+		i++;
+		decimal /= 16;
+	}
+	aux = i;
+	i -= 1;
+	while (i >= 0)
+	{
+		ft_putchar_fd (hexadecimal[i], 1);
+		i--;
+	}
+	return (aux);
 }
