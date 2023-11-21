@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joltra-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/16 13:12:08 by joltra-r          #+#    #+#             */
-/*   Updated: 2023/11/16 13:12:09 by joltra-r         ###   ########.fr       */
+/*   Created: 2023/10/02 00:15:50 by joltra-r          #+#    #+#             */
+/*   Updated: 2023/10/02 00:16:20 by joltra-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdarg.h>
-#include "libftprintf.h"
+#include <unistd.h>
 
-int	main(void)
+void	ft_putstr_fd(char *c, int fd)
 {
-	int	testft;
-	int	testorg;
+	int	i;
 
-	testft = ft_printf("Testft: %c\n", 'a');
-	printf("lenft: %d\n", testft);
-	testorg = printf("Testorg: %c\n", 'a');
-	printf("lenorg: %d\n", testorg);
-	return (0);
+	i = 0;
+	while (c[i] != '\0')
+	{
+		write(fd, &c[i], 1);
+		i++;
+	}
 }

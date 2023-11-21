@@ -1,25 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isc.c                                           :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joltra-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/11 19:29:40 by joltra-r          #+#    #+#             */
-/*   Updated: 2023/11/11 19:29:42 by joltra-r         ###   ########.fr       */
+/*   Created: 2023/10/02 00:15:18 by joltra-r          #+#    #+#             */
+/*   Updated: 2023/10/02 00:15:39 by joltra-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdarg.h>
-#include "ft_printf.h"
+#include <unistd.h>
 
-int	ft_isc(va_list args)
+void	ft_putchar_fd(char c, int fd)
 {
-	char	c;
-	int		n;
-
-	c = (char)va_arg(args, int);
-	ft_putchar_fd(c, 1);
-	n = 1;
-	return (n);
+	write(fd, &c, 1);
 }

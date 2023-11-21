@@ -11,29 +11,29 @@
 /* ************************************************************************** */
 
 #include <stdarg.h>
-#include "libftprintf.h"
+#include "ft_printf.h"
 
 int	ft_flags(const char *text, va_list args)
 {
 	int	n;
 
 	text++;
-	n = 0;
+	n = 1;
 	if (*text == 'c')
 		ft_isc(args);
 	else if (*text == 's')
-		ft_iss(args);
+		n = ft_iss(args);
 	else if (*text == 'p')
-		ft_isp(args);
+		n = ft_isp(args);
 	else if (*text == 'i' || *text == 'd')
-		ft_isid(args);
+		n = ft_isid(args);
 	else if (*text == 'u')
-		ft_isu(args);
+		n = ft_isu(args);
 	else if (*text == 'x' || *text == 'X')
 		n = ft_isx(args, text);
 	else
 		ft_putchar_fd('%', 1);
-	return (ft_returns(text, args, n));
+	return (n);
 }
 
 int	ft_printf(const char *text, ...)
@@ -63,5 +63,6 @@ int	ft_printf(const char *text, ...)
 			char_count++;
 		}
 	}
+	va_end(args);
 	return (char_count);
 }

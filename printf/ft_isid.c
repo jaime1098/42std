@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include <stdarg.h>
-#include "libftprintf.h"
+#include "ft_printf.h"
 
 int	ft_isid(va_list args)
 {
@@ -21,5 +21,7 @@ int	ft_isid(va_list args)
 	n = va_arg(args, int);
 	ft_putnbr_fd(n, 1);
 	itoa = ft_itoa(n);
-	return (ft_strlen(itoa));
+	n = ft_strlen(itoa);
+	free (itoa);
+	return (n);
 }

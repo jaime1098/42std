@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libftprintf.h                                      :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joltra-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/16 13:11:59 by joltra-r          #+#    #+#             */
-/*   Updated: 2023/11/16 13:12:01 by joltra-r         ###   ########.fr       */
+/*   Created: 2023/09/16 12:50:00 by joltra-r          #+#    #+#             */
+/*   Updated: 2023/09/16 13:46:52 by joltra-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFTPRINTF_H
-# define LIBFTPRINTF_H
+#include<string.h>
+#include<stdio.h>
 
-# include <stdarg.h>
-# include "../libft/libft.h"
+int	ft_strlen(const char *str)
+{
+	int	i;
 
-int	ft_printf(char const *text, ...);
-int	ft_isc(va_list args);
-int	ft_iss(va_list args);
-int	ft_isp(va_list args);
-int	ft_isid(va_list args);
-int	ft_isu(va_list args);
-int	ft_isx(va_list args, const char *text);
-int	ft_returns(const char *text, va_list args, int n);
-int	main(void);
-
-#endif
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
+}
+/*
+int main()
+{
+char *str = "Hello World";
+int length = strlen(str);
+int longitud = ft_strlen(str);
+printf("Length is: %i\n", length);
+printf("Longitud es: %i\n", longitud);
+return 0;
+}*/

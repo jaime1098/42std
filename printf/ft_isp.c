@@ -11,11 +11,11 @@
 /* ************************************************************************** */
 
 #include <stdarg.h>
-#include "libftprintf.h"
+#include "ft_printf.h"
 
-int	ft_decimaltohexadecimallower(unsigned int decimal)
+int	ft_decimaltohexadecimal(unsigned long decimal)
 {
-	char	hexadecimal[20];
+	char	hexadecimal[1000000];
 	int		i;
 	int		aux;
 
@@ -39,13 +39,14 @@ int	ft_decimaltohexadecimallower(unsigned int decimal)
 	}
 	return (aux);
 }
+
 int	ft_isp(va_list args)
 {
 	void	*p;
-	int n;
+	int		n;
 
 	p = va_arg(args, void *);
 	ft_putstr_fd("0x", 1);
-	n = ft_decimaltohexadecimallower((unsigned int)p);
-	return (n);
-	}
+	n = ft_decimaltohexadecimal((unsigned long)p);
+	return (n + 2);
+}

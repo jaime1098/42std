@@ -11,13 +11,19 @@
 /* ************************************************************************** */
 
 #include <stdarg.h>
-#include "libftprintf.h"
+#include "ft_printf.h"
 
 int	ft_iss(va_list args)
 {
 	char	*s;
 
 	s = va_arg(args, char *);
-	ft_putstr_fd(s, 1);
+	if (s == (char *) NULL)
+	{
+		write(1, "(null)", 6);
+		return (6);
+	}
+	else
+		ft_putstr_fd(s, 1);
 	return (ft_strlen(s));
 }

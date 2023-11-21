@@ -11,22 +11,7 @@
 /* ************************************************************************** */
 
 #include <stdarg.h>
-#include "libftprintf.h"
-
-void	ft_putunsignednbr_fd(unsigned int nb, int fd)
-{
-	char	a;
-
-	if (nb >= 10)
-	{
-		ft_putunsignednbr_fd(nb / 10, fd);
-	}
-	if (nb)
-	{
-		a = nb % 10 + '0';
-		write(fd, &a, 1);
-	}
-}
+#include "ft_printf.h"
 
 int	ft_isu(va_list args)
 {
@@ -34,7 +19,9 @@ int	ft_isu(va_list args)
 	char			*itoa;
 
 	n = va_arg (args, unsigned int);
-	ft_putunsignednbr_fd(n, 1);
-	itoa = ft_itoa(n);
-	return (ft_strlen(itoa));
+	ft_putnbr_fd(n, 1);
+	itoa = ft_itoa((unsigned int)n);
+	n = ft_strlen(itoa);
+	free (itoa);
+	return (n);
 }
