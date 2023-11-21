@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include <stdarg.h>
-#include "libft.h"
 #include "libftprintf.h"
 
 int	ft_isid(va_list args)

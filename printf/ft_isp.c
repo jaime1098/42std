@@ -11,19 +11,9 @@
 /* ************************************************************************** */
 
 #include <stdarg.h>
-#include "libft.h"
 #include "libftprintf.h"
 
-int	ft_isp(va_list args)
-{
-	void	*p;
-
-	p = va_arg(args, void *);
-	ft_putstr_fd("0x", 1);
-	ft_decimaltohexadecimalx((unsigned int)p);
-}
-
-int	ft_decimaltohexadecimalx(unsigned int decimal)
+int	ft_decimaltohexadecimallower(unsigned int decimal)
 {
 	char	hexadecimal[20];
 	int		i;
@@ -34,11 +24,11 @@ int	ft_decimaltohexadecimalx(unsigned int decimal)
 	{
 		aux = decimal % 16;
 		if (aux < 10)
-			hexadecimal[i] = aux + '0';
+		hexadecimal[i] = aux + '0';
 		else
-			hexadecimal[i] = aux + 'a' - 10;
-		i++;
-		decimal /= 16;
+		hexadecimal[i] = aux + 'a' - 10;
+	i++;
+	decimal /= 16;
 	}
 	aux = i;
 	i -= 1;
@@ -49,3 +39,13 @@ int	ft_decimaltohexadecimalx(unsigned int decimal)
 	}
 	return (aux);
 }
+int	ft_isp(va_list args)
+{
+	void	*p;
+	int n;
+
+	p = va_arg(args, void *);
+	ft_putstr_fd("0x", 1);
+	n = ft_decimaltohexadecimallower((unsigned int)p);
+	return (n);
+	}

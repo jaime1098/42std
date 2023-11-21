@@ -10,6 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdarg.h>
+#include "libftprintf.h"
+
 int	ft_returns(const char *text, va_list args, int n)
 {
 	if (*text == 'c')

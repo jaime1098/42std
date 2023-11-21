@@ -11,14 +11,15 @@
 /* ************************************************************************** */
 
 #include <stdarg.h>
-#include "libft.h"
 #include "libftprintf.h"
 
 int	ft_isc(va_list args)
 {
 	char	c;
+	int n;
 
 	c = (char)va_arg(args, int);
 	ft_putchar_fd(c, 1);
-	return (ft_strlen(args));
+	n = 1;
+	return (n);
 }
