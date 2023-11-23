@@ -56,7 +56,7 @@ char	*ft_printpositive(char *num, int n, size_t length)
 	return (num);
 }
 
-char	*createmalloc(n, length)
+char	*createmalloc(int n, size_t length)
 {
 	char	*num;
 
@@ -79,12 +79,10 @@ char	*createmalloc(n, length)
 
 char	*ft_itoa(int n)
 {
-	int		i;
 	size_t	length;
 	int		aux;
 	char	*num;
 
-	i = 0;
 	aux = n;
 	length = 1;
 	while (aux / 10)

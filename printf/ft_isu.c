@@ -16,12 +16,14 @@
 int	ft_isu(va_list args)
 {
 	unsigned int	n;
-	char			*itoa;
+	char *itoa;
 
 	n = va_arg (args, unsigned int);
-	ft_putnbr_fd(n, 1);
-	itoa = ft_itoa((unsigned int)n);
-	n = ft_strlen(itoa);
-	free (itoa);
+	ft_putunbr_fd((unsigned int)n, 1);
+	itoa = ft_itoa(n);
+	if ((int)n < 0)
+		n = 10;
+	else
+		n = ft_strlen(itoa);
 	return (n);
 }

@@ -31,5 +31,6 @@ void	ft_putnbr_fd(int nb, int fd);
 void	ft_putchar_fd(char c, int fd);
 char	*ft_itoa(int n);
 char	*ft_unsigneditoa(unsigned int n);
+void	ft_putunbr_fd(unsigned int nb, int fd);
 
 #endif
