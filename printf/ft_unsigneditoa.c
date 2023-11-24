@@ -47,7 +47,7 @@ char	*ft_unsigneditoa(unsigned int n)
 		aux /= 10;
 		length++;
 	}
-	num = mymalloc (n, length);
+	num = mymalloc(n, length);
 	return (num);
 }
 

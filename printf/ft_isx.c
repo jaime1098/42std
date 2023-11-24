@@ -72,15 +72,19 @@ int	ft_isx(va_list args, const char *text)
 	unsigned int	n;
 	int				hexa;
 
+	n = va_arg(args, unsigned int);
+	if (n == 0)
+	{
+		write (1, "0", 1);
+		return (1);
+	}
 	if (*text == 'x')
 	{
-		n = va_arg(args, unsigned int);
 		hexa = ft_decimaltohexadecimallower(n);
 		return (hexa);
 	}
 	else
 	{
-		n = va_arg(args, unsigned int);
 		hexa = ft_decimaltohexadecimalupper(n);
 		return (hexa);
 	}

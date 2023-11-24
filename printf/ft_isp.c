@@ -46,6 +46,11 @@ int	ft_isp(va_list args)
 	int		n;
 
 	p = va_arg(args, void *);
+	if (p == (void *) NULL)
+	{
+		write(1, "(nil)", 5);
+		return (5);
+	}
 	ft_putstr_fd("0x", 1);
 	n = ft_decimaltohexadecimal((unsigned long)p);
 	return (n + 2);
