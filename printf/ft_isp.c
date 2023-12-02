@@ -48,8 +48,8 @@ int	ft_isp(va_list args)
 	p = va_arg(args, void *);
 	if (p == (void *) NULL)
 	{
-		write(1, "(nil)", 5);
-		return (5);
+		write(1, "0x0", 3);
+		return (3);
 	}
 	ft_putstr_fd("0x", 1);
 	n = ft_decimaltohexadecimal((unsigned long)p);

@@ -21,9 +21,7 @@ int	ft_isu(va_list args)
 	n = va_arg (args, unsigned int);
 	ft_putunbr_fd((unsigned int)n, 1);
 	itoa = ft_unsigneditoa(n);
-	if ((int)n < 0)
-		n = 10;
-	else
-		n = ft_strlen(itoa);
+	n = ft_strlen(itoa);
+	free (itoa);
 	return (n);
 }
