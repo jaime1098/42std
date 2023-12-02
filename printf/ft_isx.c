@@ -24,11 +24,11 @@ int	ft_decimaltohexadecimallower(unsigned int decimal)
 	{
 		aux = decimal % 16;
 		if (aux < 10)
-		hexadecimal[i] = aux + '0';
+			hexadecimal[i] = aux + '0';
 		else
-		hexadecimal[i] = aux + 'a' - 10;
-	i++;
-	decimal /= 16;
+			hexadecimal[i] = aux + 'a' - 10;
+		i++;
+		decimal /= 16;
 	}
 	aux = i;
 	i -= 1;
@@ -62,7 +62,7 @@ int	ft_decimaltohexadecimalupper(unsigned int decimal)
 	while (i >= 0)
 	{
 		ft_putchar_fd (hexadecimal[i], 1);
-			i--;
+		i--;
 	}
 	return (aux);
 }

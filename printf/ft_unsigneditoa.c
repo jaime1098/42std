@@ -16,7 +16,7 @@
 char	*mymalloc(unsigned int n, size_t length)
 {
 	char	*num;
-	int	i;
+	int		i;
 
 	num = malloc(length + 1);
 	if (!num)
@@ -36,9 +36,9 @@ char	*mymalloc(unsigned int n, size_t length)
 
 char	*ft_unsigneditoa(unsigned int n)
 {
-	size_t	length;
-	unsigned int		aux;
-	char	*num;
+	size_t			length;
+	unsigned int	aux;
+	char			*num;
 
 	aux = n;
 	length = 1;

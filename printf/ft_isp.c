@@ -24,11 +24,11 @@ int	ft_decimaltohexadecimal(unsigned long decimal)
 	{
 		aux = decimal % 16;
 		if (aux < 10)
-		hexadecimal[i] = aux + '0';
+			hexadecimal[i] = aux + '0';
 		else
-		hexadecimal[i] = aux + 'a' - 10;
-	i++;
-	decimal /= 16;
+			hexadecimal[i] = aux + 'a' - 10;
+		i++;
+		decimal /= 16;
 	}
 	aux = i;
 	i -= 1;

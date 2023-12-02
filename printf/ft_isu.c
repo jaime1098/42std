@@ -16,7 +16,7 @@
 int	ft_isu(va_list args)
 {
 	unsigned int	n;
-	char *itoa;
+	char			*itoa;
 
 	n = va_arg (args, unsigned int);
 	ft_putunbr_fd((unsigned int)n, 1);

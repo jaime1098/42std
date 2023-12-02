@@ -53,14 +53,8 @@ int	ft_printf(const char *text, ...)
 		}
 		else if (ft_strchr("cspdiuxX%", *(text + 1)))
 		{
-		char_count += ft_flags(text, args);
-		text += 2;
-		}
-		else
-		{
-			ft_putchar_fd(*text, 1);
-			text++;
-			char_count++;
+			char_count += ft_flags(text, args);
+			text += 2;
 		}
 	}
 	va_end(args);
