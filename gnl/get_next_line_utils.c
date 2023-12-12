@@ -1,14 +1,5 @@
 #include "get_next_line.h"
 
-int	ft_strlen(const char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0')
-		i++;
-	return (i);
-}
 char	*completestr(char const *s1, char const *s2, char *cstr, size_t l)
 {
 	int	i;
@@ -47,15 +38,12 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	result = completestr(s1, s2, strcomplete, length);
 	return (result);
 }
-char	*ft_strchr(const char *str, int c)
+int	ft_strlen(const char *str)
 {
-	unsigned char	ch;
+	int	i;
 
-	ch = (unsigned char)c;
-	while (*str != ch && *str != '\0')
-		str++;
-	if (*str == ch)
-		return ((char *)str);
-	else
-		return (NULL);
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
 }
