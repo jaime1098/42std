@@ -1,5 +1,32 @@
 #include "get_next_line.h"
 
+char	*bookwhitoutline(char *book)
+{
+	char *newbook;
+	int i;
+	int j;
+
+	i = 0;
+	printf("BOOK\n%s\n", book);
+	while (book[i] && book[i] != '\n')
+		i++;
+	if (book[i] == '\0')
+	{
+		free(book);
+		return (NULL);
+	}
+	newbook = malloc(ft_strlen(book) - i + 1);
+	if (!newbook)
+		return (NULL);
+	i++;
+	j = 0;
+	while (book[i])
+		newbook[j++] = book[i++];
+	newbook[j] = '\0';
+	free(book);
+	printf("NEWBOOK\n%s\n", newbook);
+	return(newbook);
+}
 char	*cutlines(char *book)
 {
 	char *line;
@@ -15,7 +42,7 @@ char	*cutlines(char *book)
 	if (book[i] == '\n')
 		line[i++] = '\n';
 	line[i] = '\0';
-	printf("PINGA\n%s\n", line);
+	//printf("PINGA\n%s\n", line);
 	return (line);
 }
 
@@ -40,10 +67,10 @@ char	*readbook(int fd, char *book)
 		}
 		buffer[size] = '\0';
 		book = ft_strjoin(book, buffer);
-		//printf("%d\n", size);
+		//printf("SIZE\n%d\n", size);
 		free(buffer);
 	}
-	//printf("%s\n", book);
+	//printf("BOOK\n%s\n", book);
 	return(book);
 }
 
@@ -52,13 +79,16 @@ char	*get_next_line(int fd)
 	static char *book;
 	char *line;
 
+	printf("TEST\n");
 	if (fd < 0 || BUFFER_SIZE < 0)
 		return (NULL);
 	if(!book || !ft_strchr(book, '\n'))
 		book = readbook(fd, book);
-	//printf("%s\n", book);
+	//printf("BOOK\n%s\n", book);
 	line = cutlines(book);
-	return(book);
+	//printf("LINE\n%s", line);
+	book = bookwhitoutline(book);
+	return (line);
 }
 /*{
 	static char *bigdick;
@@ -80,10 +110,10 @@ int	main(void)
 
 	lines = 1;
 	fd = open("texto.txt", O_RDONLY);
-	line = get_next_line(fd);
+	//line = get_next_line(fd);
 	//printf("PINGA\n%s\n", line);
-	//while ((line = get_next_line(fd)) && lines < 6)
-	//	printf("%d -> %s\n", lines++, line);
+	while ((line = get_next_line(fd)) && lines < 6)
+		printf("%d -> %s\n", lines++, line);
 	close(fd);
 	return (0);
 }
