@@ -1,44 +1,41 @@
 #include "get_next_line.h"
 
-char	*completestr(char const *s1, char const *s2, char *cstr, size_t l)
+char	*ft_strchr(char *str, int c)
 {
+	unsigned char	ch;
+
+	ch = (unsigned char)c;
+	while (*str != ch && *str != '\0')
+		str++;
+	if (*str == ch)
+		return ((char *)str);
+	else
+		return (NULL);
+}
+
+char	*ft_strjoin(char *s1, char *s2)
+{
+	char	*strcomplete;
+	size_t	length;
 	int	i;
 	int	j;
 
 	i = 0;
 	j = 0;
-	while (i < (int)l - 1)
-	{
-		while (s1[i] != '\0')
-		{
-			cstr[i] = s1[i];
-			i++;
-		}
-		while (s2[j] != '\0')
-		{
-			cstr[i] = s2[j];
-			j++;
-			i++;
-		}
-	}
-	cstr[i] = '\0';
-	return (cstr);
-}
-
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	char	*strcomplete;
-	size_t	length;
-	char	*result;
-
 	length = ft_strlen(s1) + ft_strlen(s2) + 1;
 	strcomplete = malloc(length);
 	if (strcomplete == NULL)
 		return (NULL);
-	result = completestr(s1, s2, strcomplete, length);
-	return (result);
+	while (s1[i] != '\0')
+		strcomplete[i++] = s1[i];
+	while (s2[j] != '\0')
+		strcomplete[i++] = s2[j++];
+	strcomplete[i] = '\0';
+	free(s1);
+	return (strcomplete);
 }
-int	ft_strlen(const char *str)
+
+int	ft_strlen(char *str)
 {
 	int	i;
 

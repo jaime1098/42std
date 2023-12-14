@@ -22,7 +22,8 @@
 #endif
 
 char	*get_next_line(int fd);
-char	*ft_strjoin(char const *s1, char const *s2);
-int     ft_strlen(const char *str);
+char	*ft_strjoin(char *s1, char *s2);
+int     ft_strlen(char *str);
+char	*ft_strchr(char *str, int c);
 
 #endif

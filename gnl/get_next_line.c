@@ -1,60 +1,76 @@
 #include "get_next_line.h"
 
-char	*get_next_line(int fd)
+char	*cutlines(char *book)
 {
-	static char	*buffer;
-	char		*book;
-	char		*line;
-	int			size;
-	int			i;
-	int			j;
+	char *line;
+	int i;
 
 	i = 0;
-	j = 0;
+	while (book[i] && book[i] != '\n')
+		i++;
+	line = malloc(i + 2);
+	i = 0;
+	while (book[i] && book[i] != '\n')
+		line[i++] = book[i];
+	if (book[i] == '\n')
+		line[i++] = '\n';
+	line[i] = '\0';
+	printf("PINGA\n%s\n", line);
+	return (line);
+}
+
+char	*readbook(int fd, char *book)
+{
+	char *buffer;
+	int size;
+
 	size = 1;
-	if (BUFFER_SIZE <= 0 || fd < 0)
-		return (NULL);
-	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!buffer)
-		return (NULL);
-	line = malloc(sizeof(char));
-	if (!line)
-	{
-		free(buffer);
-		return (NULL);
-	}
 	book = malloc(sizeof(char));
-	if (!book)
+	book[0] = '\0';
+	while (size > 0 && !ft_strchr(buffer, '\n'))
 	{
-		free(buffer);
-		free(line);
-		return (NULL);
-	}
-	while (size > 0 && buffer[j] != '\n')
-	{
+		buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+		if (!buffer)
+			return (NULL);
 		size = read(fd, buffer, BUFFER_SIZE);
 		if (size < 0)
 		{
 			free(buffer);
-			free(line);
 			return (NULL);
 		}
-		j = 0;
-		while (buffer[j] != '\n' && buffer[j])
-		{
-			line[i++] = buffer[j++];
-			line = realloc(line, sizeof(char) * (i + 1));
-			if (!line)
-			{
-				free(buffer);
-				return (NULL);
-			}
-		}
+		buffer[size] = '\0';
+		book = ft_strjoin(book, buffer);
+		//printf("%d\n", size);
+		free(buffer);
 	}
-	free(buffer);
-	line[i] = '\0';
-	return (line);
+	//printf("%s\n", book);
+	return(book);
 }
+
+char	*get_next_line(int fd)
+{
+	static char *book;
+	char *line;
+
+	if (fd < 0 || BUFFER_SIZE < 0)
+		return (NULL);
+	if(!book || !ft_strchr(book, '\n'))
+		book = readbook(fd, book);
+	//printf("%s\n", book);
+	line = cutlines(book);
+	return(book);
+}
+/*{
+	static char *bigdick;
+	if (fd < 0)
+		return (NULL);
+	if (!pollagorda && si hay un salto de linea no quiero leer, solo leo si no hay salto de linea)
+		funcion para leer;
+	funcion para sacar la linea del buffer que he creado en la funcion para leer
+	comprobar si la linea se ha creado bien ;
+	gestionar la statica (el read no lee 2 vecces la misma cosa entonces tendre que guardarme la info)
+	devolver la linea;
+}*/
 
 int	main(void)
 {
@@ -64,8 +80,10 @@ int	main(void)
 
 	lines = 1;
 	fd = open("texto.txt", O_RDONLY);
-	while ((line = get_next_line(fd)) && lines < 6)
-		printf("%d -> %s\n", lines++, line);
+	line = get_next_line(fd);
+	//printf("PINGA\n%s\n", line);
+	//while ((line = get_next_line(fd)) && lines < 6)
+	//	printf("%d -> %s\n", lines++, line);
 	close(fd);
 	return (0);
 }
