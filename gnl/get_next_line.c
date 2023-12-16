@@ -1,15 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: joltra-r <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/16 00:29:02 by joltra-r          #+#    #+#             */
+/*   Updated: 2023/12/16 00:29:04 by joltra-r         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
 char	*bookwhitoutline(char *book)
 {
-	char *newbook;
-	int i;
-	int j;
+	char	*newbook;
+	int		i;
+	int		j;
 
 	i = 0;
 	if (!book)
-      return (NULL);
-	printf("BOOK\n%s\n", book);
+		return (NULL);
 	while (book[i] && book[i] != '\n')
 		i++;
 	if (book[i] == '\0')
@@ -26,12 +37,13 @@ char	*bookwhitoutline(char *book)
 		newbook[j++] = book[i++];
 	newbook[j] = '\0';
 	free(book);
-	return(newbook);
+	return (newbook);
 }
+
 char	*cutlines(char *book)
 {
-	char *line;
-	int i;
+	char	*line;
+	int		i;
 
 	i = 0;
 	if (!book)
@@ -41,40 +53,37 @@ char	*cutlines(char *book)
 	line = malloc(i + 2);
 	i = 0;
 	while (book[i] && book[i] != '\n')
-		line[i++] = book[i];
+	{
+		line[i] = book[i];
+		i++;
+	}
 	if (book[i] == '\n')
 		line[i++] = '\n';
 	line[i] = '\0';
-	printf("LINE\n%s\n", line);
 	return (line);
 }
 
-char	*readbook(int fd, char *book)
+char	*readbook(int fd)
 {
-	char *buffer;
-	int size;
+	char	*book;
+	char	*buffer;
+	int		size;
 
 	size = 1;
 	book = malloc(sizeof(char));
 	book[0] = '\0';
-	while (size > 0/* && !ft_strchr(buffer, '\n')*/)
+	while (size > 0)
 	{
 		buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 		if (!buffer)
 			return (NULL);
 		size = read(fd, buffer, BUFFER_SIZE);
-		if (size < 0)
-		{
-			free(buffer);
-			free(book);
-			return (NULL);
-		}
+		if (size == -1)
+			return (free(buffer), free(book), NULL);
 		buffer[size] = '\0';
 		book = ft_strjoin(book, buffer);
-		//printf("SIZE\n%d\n", size);
 		free(buffer);
 	}
-	//printf("BOOK\n%s\n", book);
 	return(book);
 }
 
@@ -83,36 +92,19 @@ char	*get_next_line(int fd)
 	static char *book;
 	char *line;
 
-	//printf("TEST\n");
-	if (fd < 0 || BUFFER_SIZE < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	if(!book)
-		book = readbook(fd, book);
-	if (book[0] == '\0')
-	{
-		free(book);
+		book = readbook(fd);
+	if (!book)
 		return (NULL);
-	}
-	//printf("BOOK\n%s\n", book);
+	if (book[0] == '\0')
+		return (free(book), book = NULL, NULL);
 	line = cutlines(book);
-	//printf("LINE\n%s", line);
 	book = bookwhitoutline(book);
-	printf("NEWBOOK\n%s\n", book);
 	return (line);
 }
-/*{
-	static char *bigdick;
-	if (fd < 0)
-		return (NULL);
-	if (!pollagorda && si hay un salto de linea no quiero leer, solo leo si no hay salto de linea)
-		funcion para leer;
-	funcion para sacar la linea del buffer que he creado en la funcion para leer
-	comprobar si la linea se ha creado bien ;
-	gestionar la statica (el read no lee 2 vecces la misma cosa entonces tendre que guardarme la info)
-	devolver la linea;
-}*/
-
-int	main(void)
+/*int	main(void)
 {
 	int		fd;
 	char	*line;
@@ -122,8 +114,8 @@ int	main(void)
 	fd = open("texto.txt", O_RDONLY);
 	//line = get_next_line(fd);
 	//printf("RESULTADO\n%s\n", line);
-	while (line = get_next_line(fd))
+	while ((line = get_next_line(fd)))
 		printf("%d -> %s\n", lines++, line);
 	close(fd);
 	return (0);
-}
+}*/

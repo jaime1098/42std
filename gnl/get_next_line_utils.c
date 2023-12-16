@@ -1,9 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: joltra-r <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/16 00:29:15 by joltra-r          #+#    #+#             */
+/*   Updated: 2023/12/16 00:29:17 by joltra-r         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
 char	*ft_strchr(char *str, int c)
 {
 	unsigned char	ch;
 
+	if (!str)
+		return (NULL);
 	ch = (unsigned char)c;
 	while (*str != ch && *str != '\0')
 		str++;
@@ -20,14 +34,14 @@ char	*ft_strjoin(char *s1, char *s2)
 	int	i;
 	int	j;
 
-	i = 0;
+	i = -1;
 	j = 0;
 	length = ft_strlen(s1) + ft_strlen(s2) + 1;
 	strcomplete = malloc(length);
 	if (strcomplete == NULL)
 		return (NULL);
-	while (s1[i] != '\0')
-		strcomplete[i++] = s1[i];
+	while (s1[++i] != '\0')
+		strcomplete[i] = s1[i];
 	while (s2[j] != '\0')
 		strcomplete[i++] = s2[j++];
 	strcomplete[i] = '\0';
