@@ -19,18 +19,16 @@ char	*bookwhitoutline(char *book)
 	int		j;
 
 	i = 0;
+	newbook = NULL;
 	if (!book)
 		return (NULL);
 	while (book[i] && book[i] != '\n')
 		i++;
 	if (book[i] == '\0')
-	{
-		free(book);
-		return (NULL);
-	}
+		return (free(book), book = NULL, NULL);
 	newbook = malloc(ft_strlen(book) - i + 1);
 	if (!newbook)
-		return (NULL);
+		return (free(newbook), NULL);
 	i++;
 	j = 0;
 	while (book[i])
@@ -58,47 +56,44 @@ char	*cutlines(char *book)
 		i++;
 	}
 	if (book[i] == '\n')
-		line[i++] = '\n';
+	{
+		line[i] = '\n';
+		i++;
+	}
 	line[i] = '\0';
 	return (line);
 }
 
-char	*readbook(int fd)
+char	*readbook(int fd, char *book)
 {
-	char	*book;
 	char	*buffer;
 	int		size;
 
 	size = 1;
-	book = malloc(sizeof(char));
-	book[0] = '\0';
-	while (size > 0)
+	while (size > 0 && !ft_strchr(book, '\n'))
 	{
 		buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 		if (!buffer)
 			return (NULL);
 		size = read(fd, buffer, BUFFER_SIZE);
 		if (size == -1)
-			return (free(buffer), free(book), NULL);
+			return (free(buffer), free(book), book = NULL, NULL);
 		buffer[size] = '\0';
 		book = ft_strjoin(book, buffer);
-		free(buffer);
+		free (buffer);
 	}
-	return(book);
+	return (book);
 }
 
 char	*get_next_line(int fd)
 {
-	static char *book;
-	char *line;
+	static char	*book;
+	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if(!book)
-		book = readbook(fd);
-	if (!book)
-		return (NULL);
-	if (book[0] == '\0')
+	book = readbook(fd, book);
+	if (!book || book[0] == '\0')
 		return (free(book), book = NULL, NULL);
 	line = cutlines(book);
 	book = bookwhitoutline(book);
@@ -116,6 +111,8 @@ char	*get_next_line(int fd)
 	//printf("RESULTADO\n%s\n", line);
 	while ((line = get_next_line(fd)))
 		printf("%d -> %s\n", lines++, line);
+	//printf("%s%s", get_next_line(fd), get_next_line(fd));
+	//printf("%s", get_next_line(fd));
 	close(fd);
 	return (0);
 }*/
