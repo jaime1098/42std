@@ -87,10 +87,10 @@ char	*readbook(int fd, char *book)
 
 char	*get_next_line(int fd)
 {
-	static char	*book[20];
+	static char	*book[OPEN_MAX];
 	char		*line;
-	printf("fd = %d\n", fd);
-	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 20)
+
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > OPEN_MAX)
 		return (NULL);
 	book[fd] = readbook(fd, book[fd]);
 	if (!book[fd] || book[fd][0] == '\0')
@@ -99,7 +99,7 @@ char	*get_next_line(int fd)
 	book[fd] = bookwhitoutline(book[fd]);
 	return (line);
 }
-int	main(void)
+/*int	main(void)
 {
 	int		fd1;
 	int		fd2;
@@ -128,4 +128,4 @@ int	main(void)
 	close(fd2);
 	close(fd3);
 	return (0);
-}
+}*/
