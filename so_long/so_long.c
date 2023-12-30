@@ -1,69 +1,87 @@
-/*1. Validación del Mapa
-Abrir y leer el archivo del mapa (fd).
-Lectura del Mapa:*/
-/*Verificar la validez del formato del mapa.
-Manejo de Errores:
-Identificar y manejar posibles errores:
-Falta de muros alrededor del mapa.
-Camino bloqueado al destino o a los objetos.
-Presencia de múltiples posiciones iniciales o de salida.
-Caracteres inválidos en el mapa.
-
-2. Creación Gráfica del Mapa
-Implementar Representación Gráfica:
-Utilizar miniLibX o una biblioteca gráfica similar para mostrar visualmente el mapa.
-Asignar imágenes a los diferentes elementos del mapa (muros, objetos, posición inicial, salida).
-
-3. Implementación del Juego
-Crear Personaje Principal:
-Diseñar gráficamente el personaje principal.
-Asociar al personaje con la posición inicial (P) en el mapa.
-Movimiento y Contador de Movimientos:
-Permitir el movimiento del personaje principal con teclas (WASD).
-Implementar un contador de movimientos.
-Establecer Límites del Mapa:
-Definir los límites del mapa (muros) para evitar que el personaje se mueva fuera de ellos.
-
-4. Finalización del Juego
-Condición de Finalización:
-Agregar funcionalidad para terminar el juego:
-Botón ESC o cierre de ventana (manejo de eventos).
-Mensajes para victoria y derrota.
-Reiniciar el juego o cerrar la ventana tras terminar.*/
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   so_long.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: joltra-r <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/30 12:59:17 by joltra-r          #+#    #+#             */
+/*   Updated: 2023/12/30 12:59:19 by joltra-r         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "so_long.h"
 
-void	check_limits(t_game *game)
+void	check_characteres(t_game *game)
 {
-	int i;
+	int	i;
+	int	j;
+
+	i = 1;
+	game->pnum = 0;
+	game->cnum = 0;
+	game->exnum = 0;
+	while (i < (int)game->rows)
+	{
+		j = 0;
+		while (j++ < (int)game->cols)
+		{
+			if (game->map[i][j] == 'P')
+				game->pnum++;
+			else if (game->map[i][j] == 'C')
+				game->cnum++;
+			else if (game->map[i][j] == 'E')
+				game->exnum++;
+		}
+		i++;
+	}
+	printf("\nP = %d\nC = %d\nE = %d\n", game->pnum, game->cnum, game->exnum);
+	if (game->pnum != 1 || game->exnum != 1)
+		printf("\nError, characters error\n");
+	else if (game->cnum < 1)
+		printf("\nError, characters error\n");
+}
+
+void	check_limits(t_game game)
+{
+	int		i;
+	size_t	length;
 
 	i = 0;
-	printf("\n%s\n", game->map[2]);
-	while(i < game->cols)
+	while (i < (int)game.cols - 1)
 	{
-		if (game->map[0][i] != '1' || game->map[game->rows - 1][i] != '1')
-			printf("\n%c\n", game->map[0][i]);
+		if (game.map[0][i] != '1' || game.map[game.rows - 1][i] != '1')
+			printf("\nError, invalid map\n");
 		i++;
 	}
 	i = 0;
-	while (i < game->rows)
+	while (i < (int)game.rows)
 	{
-		if (game->map[i][0] != '1' || game->map[i][game->cols - 2] != '1')
-			printf("\nta mal\n");
+		if (game.map[i][0] != '1' || game.map[i][game.cols - 1] != '1')
+			printf("\nError, invalid map\n");
 		i++;
 	}
+	i = -1;
+	while (++i < (int)game.rows - 1)
+	{
+		length = ft_strlen(game.map[i]);
+		if (length - 1 != game. cols)
+			printf("\nError, invalid map");
+	}
 }
+
 void	check_map(t_game game)
 {
-	printf("\n%s\n", game.map[2]);
-	check_limits(&game);
+	check_limits(game);
+	check_characteres(&game);
 }
+
 void	check_rows(t_game *game)
 {
 	char	*line;
 
 	(*game).rows = 0;
-	(*game).fd = open("map.ber", O_RDONLY);
+	(*game).fd = open(game->ber, O_RDONLY);
 	if ((*game).fd < 0)
 		printf("Error opening file");
 	while ((line = get_next_line((*game).fd)))
@@ -73,15 +91,20 @@ void	check_rows(t_game *game)
 	}
 	close((*game).fd);
 }
+
 void	read_map(t_game *game)
 {
-	int 	i;
-	int		j;
+	int		i;
 	char	*line;
 
-	(*game).fd = open("map.ber", O_RDONLY);
+	(*game).fd = open(game->ber, O_RDONLY);
 	i = 0;
 	line = get_next_line((*game).fd);
+	if (!line)
+	{
+		printf("Error, no map");
+		exit(1);
+	}
 	while (line != NULL)
 	{
 		(*game).map[i] = line;
@@ -90,13 +113,26 @@ void	read_map(t_game *game)
 		i++;
 	}
 	(*game).map[i] = NULL;
-	(*game).cols = ft_strlen((*game).map[0] - 1);
+	(*game).cols = ft_strlen((*game).map[game->rows - 1]);
 	close((*game).fd);
 }
-int	main()
-{
-	t_game game;
 
+int	main(int argc, char **argv)
+{
+	t_game	game;
+
+	if (argc != 2 || argv[1] == '\0')
+	{
+		printf("Error, invalid argument");
+		exit(1);
+	}
+	if (argv[1])
+		if (ft_strncmp(argv[1] + ft_strlen(argv[1]) - 4, ".ber", 4) != 0)
+		{
+			printf("Error, invalid argument");
+			exit (1);
+		}
+	game.ber = argv[1];
 	check_rows(&game);
 	game.map = (char **)malloc((game.rows + 1) * sizeof(char *));
 	read_map(&game);
