@@ -12,22 +12,54 @@
 
 #include "so_long.h"
 
+void	check_complete(t_game game)
+{
+	if (game.map[game.pos_y - 1][game.pos_x] != '1')
+	{
+		game.map[game.pos_y - 1][game.pos_x] = '1';
+		game.pos_y -= 1;
+		check_complete(game);
+		game.pos_y += 1;
+	}
+	if (game.map[game.pos_y + 1][game.pos_x] != '1')
+	{
+		game.map[game.pos_y + 1][game.pos_x] = '1';
+		game.pos_y += 1;
+		check_complete(game);
+		game.pos_y -= 1;
+	}
+	if (game.map[game.pos_y][game.pos_x - 1] != '1')
+	{
+		game.map[game.pos_y][game.pos_x - 1] = '1';
+		game.pos_x -= 1;
+		check_complete(game);
+		game.pos_x += 1;
+	}
+	if (game.map[game.pos_y][game.pos_x + 1] != '1')
+	{
+		game.map[game.pos_y][game.pos_x + 1] = '1';
+		game.pos_x += 1;
+		check_complete(game);
+		game.pos_x -= 1;
+	}
+}
 void	check_characteres(t_game *game)
 {
 	int	i;
 	int	j;
 
 	i = 1;
-	game->pnum = 0;
-	game->cnum = 0;
-	game->exnum = 0;
 	while (i < (int)game->rows)
 	{
 		j = 0;
 		while (j++ < (int)game->cols)
 		{
 			if (game->map[i][j] == 'P')
+			{
 				game->pnum++;
+				game->pos_y = i;
+				game->pos_x = j;
+			}
 			else if (game->map[i][j] == 'C')
 				game->cnum++;
 			else if (game->map[i][j] == 'E')
@@ -74,6 +106,11 @@ void	check_map(t_game game)
 {
 	check_limits(game);
 	check_characteres(&game);
+	check_complete(game);
+	int i;
+	i = -1;
+	while (++i <= 4)
+		printf("%s", game.map[i]);
 }
 
 void	check_rows(t_game *game)
@@ -132,6 +169,9 @@ int	main(int argc, char **argv)
 			printf("Error, invalid argument");
 			exit (1);
 		}
+	game.pnum = 0;
+	game.cnum = 0;
+	game.exnum = 0;
 	game.ber = argv[1];
 	check_rows(&game);
 	game.map = (char **)malloc((game.rows + 1) * sizeof(char *));
