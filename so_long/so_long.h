@@ -33,9 +33,10 @@ typedef struct s_game
 	int		pnum;
 	int		cnum;
 	int		exnum;
-	int		pos_x;
-	int		pos_y;
-
+	int		x;
+	int		y;
+	int		auxx;
+	int		auxy;
 }	t_game;
 
 int	main(int argc, char **argv);

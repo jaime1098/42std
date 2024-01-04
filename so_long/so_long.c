@@ -12,57 +12,69 @@
 
 #include "so_long.h"
 
-/*void	complete_map(t_game *s_game)
+void	check_coins(t_game game)
 {
+	int	i;
+	int	j;
 
-}*/
-void	check_exit(t_game *game)
+	i = 1;
+	game.cnum = 0;
+	while (i < (int)game.rows)
+	{
+		j = 0;
+		while (j++ < (int)game.cols)
+			if (game.map[i][j] == 'C')
+				game.cnum++;
+		i++;
+	}
+	if (game.cnum != 0)
+		printf("\nError\n");
+}
+void	search_e(t_game *game)
 {
-	if (game->map[game->pos_y][game->pos_x] == 'E')
-	{
-		if(game->cnum != 0)
-			return ;
-		else
-			game->map[game->pos_y][game->pos_x] = '1';
-
-	}
-	if (game->map[game->pos_y][game->pos_x] == 'C')
-	{
-		printf("\nC = %d\n", game->cnum);
-		game->cnum--;
-		printf("\nC = %d\n", game->cnum);
-	}
-	game->map[game->pos_y][game->pos_x] = '1';
+	game->map[game->y][game->x] = '1';
+	game->auxy = game->y;
+	game->auxx = game->x;
+	if (game->map[game->y - 1][game->x] == 'E')
+		game->auxy -= 1;
+	if (game->map[game->y + 1][game->x] == 'E')
+		game->auxy += 1;
+	if (game->map[game->y][game->x - 1] == 'E')
+		game->auxx -= 1;
+	if (game->map[game->y][game->x + 1] == 'E')
+		game->auxx += 1;
+	game->map[game->auxy][game->auxx] = '1';
 }
 
 void	check_complete(t_game game)
 {
-	check_exit(&game);
-	if (game.map[game.pos_y - 1][game.pos_x] != '1')
+	search_e(&game);
+	if (game.map[game.y - 1][game.x] != '1')
 	{
-		game.pos_y -= 1;
+		game.y -= 1;
 		check_complete(game);
-		game.pos_y += 1;
+		game.y += 1;
 	}
-	if (game.map[game.pos_y + 1][game.pos_x] != '1')
+	if (game.map[game.y + 1][game.x] != '1')
 	{
-		game.pos_y += 1;
+		game.y += 1;
 		check_complete(game);
-		game.pos_y -= 1;
+		game.y -= 1;
 	}
-	if (game.map[game.pos_y][game.pos_x - 1] != '1')
+	if (game.map[game.y][game.x - 1] != '1')
 	{
-		game.pos_x -= 1;
+		game.x -= 1;
 		check_complete(game);
-		game.pos_x += 1;
+		game.x += 1;
 	}
-	if (game.map[game.pos_y][game.pos_x + 1] != '1')
+	if (game.map[game.y][game.x + 1] != '1')
 	{
-		game.pos_x += 1;
+		game.x += 1;
 		check_complete(game);
-		game.pos_x -= 1;
+		game.x -= 1;
 	}
 }
+
 void	check_characteres(t_game *game)
 {
 	int	i;
@@ -77,8 +89,8 @@ void	check_characteres(t_game *game)
 			if (game->map[i][j] == 'P')
 			{
 				game->pnum++;
-				game->pos_y = i;
-				game->pos_x = j;
+				game->y = i;
+				game->x = j;
 			}
 			else if (game->map[i][j] == 'C')
 				game->cnum++;
@@ -127,10 +139,7 @@ void	check_map(t_game game)
 	check_limits(game);
 	check_characteres(&game);
 	check_complete(game);
-	int i;
-	i = -1;
-	while (++i <= 4)
-		printf("%s", game.map[i]);
+	check_coins(game);
 }
 
 void	check_rows(t_game *game)
@@ -193,6 +202,8 @@ int	main(int argc, char **argv)
 	game.cnum = 0;
 	game.exnum = 0;
 	game.ber = argv[1];
+	game.auxy = 0;
+	game.auxx = 0;
 	check_rows(&game);
 	game.map = (char **)malloc((game.rows + 1) * sizeof(char *));
 	read_map(&game);
