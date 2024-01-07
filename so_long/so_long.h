@@ -25,6 +25,7 @@
 typedef struct s_game
 {
 	char	**map;
+	char	*line;
 	char	*ber;
 	size_t	rows;
 	size_t	cols;
@@ -37,6 +38,10 @@ typedef struct s_game
 }	t_game;
 
 int		main(int argc, char **argv);
+void	invalidmap(void);
+void	invalidfd(void);
+void	invalidarg(void);
+void	invalidchar(void);
 int		ft_strncmp(const char *str1, const char *str2, size_t n);
 void	check_map(t_game game);
 int		ft_strlen(char *str);

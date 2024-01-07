@@ -1,7 +1,7 @@
 NAME = solong.a
 
 SRCS =	so_long.c so_long_utils.c so_long_map.c get_next_line.c \
-		get_next_line_utils.c
+		get_next_line_utils.c errors.c
 
 OBJS = $(SRCS:.c=.o)
 

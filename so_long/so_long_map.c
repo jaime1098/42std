@@ -33,9 +33,9 @@ void	check_coins(t_game game)
 		i++;
 	}
 	if (game.exnum != 0)
-		printf("\nError\n");
+		invalidmap();
 	if (game.cnum != 0)
-		printf("\nError\n");
+		invalidmap();
 }
 
 void	check_complete(t_game game)
@@ -79,7 +79,7 @@ void	check_characteres(t_game *game)
 		while (j++ < (int)game->cols)
 		{
 			if (!ft_strchr("01PEC\n", game->map[i][j]))
-				printf("\nError, invalid char\n");
+				invalidchar();
 			if (game->map[i][j] == 'P')
 			{
 				game->pnum++;
@@ -92,11 +92,6 @@ void	check_characteres(t_game *game)
 				game->exnum++;
 		}
 	}
-	printf("\nP = %d\nC = %d\nE = %d\n", game->pnum, game->cnum, game->exnum);
-	if (game->pnum != 1 || game->exnum != 1)
-		printf("\nError, characters error\n");
-	else if (game->cnum < 1)
-		printf("\nError, characters error\n");
 }
 
 void	check_limits(t_game game)
@@ -108,14 +103,14 @@ void	check_limits(t_game game)
 	while (i < (int)game.cols - 1)
 	{
 		if (game.map[0][i] != '1' || game.map[game.rows - 1][i] != '1')
-			printf("\nError, invalid map\n");
+			invalidmap();
 		i++;
 	}
 	i = 0;
 	while (i < (int)game.rows)
 	{
 		if (game.map[i][0] != '1' || game.map[i][game.cols - 1] != '1')
-			printf("\nError, invalid map\n");
+			invalidmap();
 		i++;
 	}
 	i = -1;
@@ -123,7 +118,7 @@ void	check_limits(t_game game)
 	{
 		length = ft_strlen(game.map[i]);
 		if (length - 1 != game.cols)
-			printf("\nError, invalid map");
+			invalidmap();
 	}
 }
 
@@ -134,6 +129,10 @@ void	check_map(t_game game)
 	i = -1;
 	check_limits(game);
 	check_characteres(&game);
+	if (game.pnum != 1 || game.exnum != 1)
+		invalidchar();
+	else if (game.cnum < 1)
+		invalidchar();
 	check_complete(game);
 	while (++i < (int)game.rows)
 		printf("%s", game.map[i]);

@@ -14,41 +14,35 @@
 
 void	check_rows(t_game *game)
 {
-	char	*line;
-
 	(*game).rows = 0;
 	(*game).fd = open(game->ber, O_RDONLY);
 	if ((*game).fd < 0)
-		printf("Error opening file");
-	line = get_next_line((*game).fd);
-	while ((line != NULL))
+		invalidfd();
+	game->line = get_next_line((*game).fd);
+	while ((game->line != NULL))
 	{
 		(*game).rows++;
-		free(line);
-		line = get_next_line((*game).fd);
+		free(game->line);
+		game->line = get_next_line((*game).fd);
 	}
-	free(line);
+	free(game->line);
 	close((*game).fd);
 }
 
 void	read_map(t_game *game)
 {
 	int		i;
-	char	*line;
 
 	(*game).fd = open(game->ber, O_RDONLY);
 	i = 0;
-	line = get_next_line((*game).fd);
-	if (!line)
+	game->line = get_next_line((*game).fd);
+	if (!game->line)
+		invalidmap();
+	while (game->line != NULL)
 	{
-		printf("Error, no map");
-		exit(1);
-	}
-	while (line != NULL)
-	{
-		(*game).map[i] = line;
+		(*game).map[i] = game->line;
 		printf("%s", (*game).map[i]);
-		line = get_next_line((*game).fd);
+		game->line = get_next_line((*game).fd);
 		i++;
 	}
 	(*game).map[i] = NULL;
@@ -61,12 +55,12 @@ int	main(int argc, char **argv)
 	t_game	game;
 	int		l;
 
-	if (argc != 2 || argv[1] == '\0')
-		exit(1);
 	l = ft_strlen(argv[1]);
+	if (argc != 2 || argv[1] == '\0')
+		invalidarg();
 	if (argv[1])
 		if (ft_strncmp(argv[1] + l - 4, ".ber", 4) != 0)
-			exit (1);
+			invalidarg();
 	game.pnum = 0;
 	game.cnum = 0;
 	game.exnum = 0;
