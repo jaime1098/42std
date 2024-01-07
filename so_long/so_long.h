@@ -21,7 +21,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
-# include "../get_next_line/get_next_line.h"
 
 typedef struct s_game
 {
@@ -35,11 +34,14 @@ typedef struct s_game
 	int		exnum;
 	int		x;
 	int		y;
-	int		auxx;
-	int		auxy;
 }	t_game;
 
-int	main(int argc, char **argv);
-int	ft_strncmp(const char *str1, const char *str2, size_t n);
+int		main(int argc, char **argv);
+int		ft_strncmp(const char *str1, const char *str2, size_t n);
+void	check_map(t_game game);
+int		ft_strlen(char *str);
+char	*ft_strjoin(char *s1, char *s2);
+char	*ft_strchr(char *str, int c);
+char	*get_next_line(int fd);
 
 #endif

@@ -11,7 +11,50 @@
 /* ************************************************************************** */
 
 #include "so_long.h"
+/*void	search_e(t_game *game)
+{
+	game->map[game->y][game->x] = '1';
+	game->auxy = game->y;
+	game->auxx = game->x;
+	if (game->map[game->y - 1][game->x] == 'E')
+		game->auxy -= 1;
+	if (game->map[game->y + 1][game->x] == 'E')
+		game->auxy += 1;
+	if (game->map[game->y][game->x - 1] == 'E')
+		game->auxx -= 1;
+	if (game->map[game->y][game->x + 1] == 'E')
+		game->auxx += 1;
+	game->map[game->auxy][game->auxx] = '1';
+}
 
+void	check_complete(t_game game)
+{
+	search_e(&game);
+	if (game.map[game.y - 1][game.x] != '1')
+	{
+		game.y -= 1;
+		check_complete(game);
+		game.y += 1;
+	}
+	if (game.map[game.y + 1][game.x] != '1')
+	{
+		game.y += 1;
+		check_complete(game);
+		game.y -= 1;
+	}
+	if (game.map[game.y][game.x - 1] != '1')
+	{
+		game.x -= 1;
+		check_complete(game);
+		game.x += 1;
+	}
+	if (game.map[game.y][game.x + 1] != '1')
+	{
+		game.x += 1;
+		check_complete(game);
+		game.x -= 1;
+	}
+}*/
 int	ft_strncmp(const char *str1, const char *str2, size_t n)
 {
 	if (n == 0)
