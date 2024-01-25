@@ -41,7 +41,6 @@ void	read_map(t_game *game)
 	while (game->line != NULL)
 	{
 		(*game).map[i] = game->line;
-		printf("%s", (*game).map[i]);
 		game->line = get_next_line((*game).fd);
 		i++;
 	}
@@ -55,12 +54,14 @@ int	main(int argc, char **argv)
 	t_game	game;
 	int		l;
 
-	l = ft_strlen(argv[1]);
 	if (argc != 2 || argv[1] == '\0')
 		invalidarg();
+	l = ft_strlen(argv[1]);
 	if (argv[1])
 		if (ft_strncmp(argv[1] + l - 4, ".ber", 4) != 0)
 			invalidarg();
+	game.mlx = mlx_init();
+	game.mlx_win = mlx_new_window(game.mlx, 1920, 1080, "so_long");
 	game.pnum = 0;
 	game.cnum = 0;
 	game.exnum = 0;
@@ -69,6 +70,9 @@ int	main(int argc, char **argv)
 	game.map = (char **)malloc((game.rows + 1) * sizeof(char *));
 	read_map(&game);
 	check_map(game);
-	free(game.map);
+	//free(game.map);
+	charge_images(&game);
+	inizialite_sprites(&game);
+	mlx_loop(game.mlx);
 	return (0);
 }

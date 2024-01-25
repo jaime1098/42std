@@ -21,10 +21,20 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include "mlx.h"
+
+typedef struct s_sprites
+{
+		void	*mario;
+}				t_sprites;
 
 typedef struct s_game
 {
 	char	**map;
+	void	*mlx;
+	void	*mlx_win;
+	void	*pj;
+	void	*sea;
 	char	*line;
 	char	*ber;
 	size_t	rows;
@@ -35,6 +45,7 @@ typedef struct s_game
 	int		exnum;
 	int		x;
 	int		y;
+	t_sprites	*spr;
 }	t_game;
 
 int		main(int argc, char **argv);
@@ -48,5 +59,9 @@ int		ft_strlen(char *str);
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strchr(char *str, int c);
 char	*get_next_line(int fd);
+void    charge_images(t_game *game);
+void	inizialite_sprites(t_game *game);
+
+# define MARIO "/Users/joltra-r/student/sprites/New-Piskel.xpm"
 
 #endif

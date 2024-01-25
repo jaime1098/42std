@@ -1,29 +1,32 @@
-NAME = solong.a
+NAME = so_long
 
 SRCS =	so_long.c so_long_utils.c so_long_map.c get_next_line.c \
-		get_next_line_utils.c errors.c
+		get_next_line_utils.c errors.c sprites.c
 
-OBJS = $(SRCS:.c=.o)
+OBJECTS = $(SRCS:.c=.o)
 
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS := -Wall -Wextra -Werror -Imlx
 REMOVE = rm -f
+CC := cc
 
 all: $(NAME)
 
+$(NAME): $(OBJECTS) mlx/libmlx.a
+	$(CC) $(OBJECTS) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
 
-$(NAME): $(OBJS)
-		 ar rcs $(NAME) $(OBJS)
+mlx/libmlx.a:
+	make -C mlx/
 
-.c.o:
-		$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
+run:
+	./so_long map1.ber
 
 clean:
-		$(REMOVE) $(OBJS)
+	$(REMOVE) $(OBJECTS)
+	$(REMOVE) $(OBJECTS_BONUS)
+	make -C mlx/ clean
 
 fclean: clean
-		$(REMOVE) $(NAME)
+	$(REMOVE) $(NAME)
+	$(REMOVE) $(NAME_BONUS)
 
 re: fclean all
-
-.PHONY:	all clean fclean re

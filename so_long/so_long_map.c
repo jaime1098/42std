@@ -134,7 +134,5 @@ void	check_map(t_game game)
 	else if (game.cnum < 1)
 		invalidchar();
 	check_complete(game);
-	while (++i < (int)game.rows)
-		printf("%s", game.map[i]);
 	check_coins(game);
 }
