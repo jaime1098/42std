@@ -124,9 +124,6 @@ void	check_limits(t_game game)
 
 void	check_map(t_game game)
 {
-	int	i;
-
-	i = -1;
 	check_limits(game);
 	check_characteres(&game);
 	if (game.pnum != 1 || game.exnum != 1)

@@ -61,7 +61,7 @@ int	main(int argc, char **argv)
 		if (ft_strncmp(argv[1] + l - 4, ".ber", 4) != 0)
 			invalidarg();
 	game.mlx = mlx_init();
-	game.mlx_win = mlx_new_window(game.mlx, 1920, 1080, "so_long");
+	game.mlx_win = mlx_new_window(game.mlx, 1200, 1200, "so_long");
 	game.pnum = 0;
 	game.cnum = 0;
 	game.exnum = 0;
@@ -72,7 +72,7 @@ int	main(int argc, char **argv)
 	check_map(game);
 	//free(game.map);
 	charge_images(&game);
-	inizialite_sprites(&game);
+	//inizialite_sprites(&game);
 	mlx_loop(game.mlx);
 	return (0);
 }

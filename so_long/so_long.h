@@ -34,7 +34,8 @@ typedef struct s_game
 	void	*mlx;
 	void	*mlx_win;
 	void	*pj;
-	void	*sea;
+	void	*grass;
+	void	*wall;
 	char	*line;
 	char	*ber;
 	size_t	rows;
@@ -54,6 +55,7 @@ void	invalidfd(void);
 void	invalidarg(void);
 void	invalidchar(void);
 int		ft_strncmp(const char *str1, const char *str2, size_t n);
+void	read_map(t_game *game);
 void	check_map(t_game game);
 int		ft_strlen(char *str);
 char	*ft_strjoin(char *s1, char *s2);
