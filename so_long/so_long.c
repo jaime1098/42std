@@ -47,6 +47,7 @@ void	read_map(t_game *game)
 	(*game).map[i] = NULL;
 	(*game).cols = ft_strlen((*game).map[game->rows - 1]);
 	close((*game).fd);
+
 }
 
 int	main(int argc, char **argv)
@@ -69,9 +70,9 @@ int	main(int argc, char **argv)
 	check_rows(&game);
 	game.map = (char **)malloc((game.rows + 1) * sizeof(char *));
 	read_map(&game);
+	charge_images(&game);
 	check_map(game);
 	//free(game.map);
-	charge_images(&game);
 	//inizialite_sprites(&game);
 	mlx_loop(game.mlx);
 	return (0);

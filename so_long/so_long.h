@@ -31,11 +31,14 @@ typedef struct s_sprites
 typedef struct s_game
 {
 	char	**map;
+	char	**map_cpy;
 	void	*mlx;
 	void	*mlx_win;
 	void	*pj;
 	void	*grass;
 	void	*wall;
+	void	*coin;
+	void	*exit;
 	char	*line;
 	char	*ber;
 	size_t	rows;

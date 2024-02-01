@@ -19,12 +19,13 @@ void	charge_images(t_game *game)
 	size_t	i;
 	size_t	j;
 	
-	width = 42;
-	height = 42;
-	read_map(&game);
-	game->pj = mlx_xpm_file_to_image(game->mlx, "/Users/joltra-r/student/sprites/pj.xpm", &width, &height);
-	game->grass = mlx_xpm_file_to_image(game->mlx, "/Users/joltra-r/student/sprites/grass.xpm", &width, &height);
-	game->wall = mlx_xpm_file_to_image(game->mlx, "/Users/joltra-r/student/sprites/wall.xpm", &width, &height);
+	width = 100;
+	height = 100;
+	game->pj = mlx_xpm_file_to_image(game->mlx, "../sprites/pj.xpm", &width, &height);
+	game->grass = mlx_xpm_file_to_image(game->mlx, "../sprites/grass.xpm", &width, &height);
+	game->wall = mlx_xpm_file_to_image(game->mlx, "../sprites/wall.xpm", &width, &height);
+	game->coin = mlx_xpm_file_to_image(game->mlx, "../sprites/coin.xpm", &width, &height);
+	game->exit = mlx_xpm_file_to_image(game->mlx, "../sprites/exit.xpm", &width, &height);
 	i = 0;
 	while (i < game->rows)
 	{
@@ -32,11 +33,15 @@ void	charge_images(t_game *game)
 		while (j < game->cols)
 		{
 			if (game->map[i][j] == '1')
-				mlx_put_image_to_window(game->mlx, game->mlx_win, game->wall, i*32, j*32);
+				mlx_put_image_to_window(game->mlx, game->mlx_win, game->wall, j*32, i*32);
 			if (game->map[i][j] == '0') 
-				mlx_put_image_to_window(game->mlx, game->mlx_win, game->grass, i*32, j*32);
+				mlx_put_image_to_window(game->mlx, game->mlx_win, game->grass, j*32, i*32);
 			if (game->map[i][j] == 'P') 
-				mlx_put_image_to_window(game->mlx, game->mlx_win, game->pj, i*32, j*32);
+				mlx_put_image_to_window(game->mlx, game->mlx_win, game->pj, j*32, i*32);
+			if (game->map[i][j] == 'C') 
+				mlx_put_image_to_window(game->mlx, game->mlx_win, game->coin, j*32, i*32);
+			if (game->map[i][j] == 'E') 
+				mlx_put_image_to_window(game->mlx, game->mlx_win, game->exit, j*32, i*32);
 			j++;
 		}
 		i++;
