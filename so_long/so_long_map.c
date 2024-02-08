@@ -38,7 +38,51 @@ void	check_coins(t_game game)
 		invalidmap();
 }
 
+void	search_e(t_game *game)
+{
+	game->map[game->y][game->x] = '1';
+	game->auxy = game->y;
+	game->auxx = game->x;
+	if (game->map[game->y - 1][game->x] == 'E')
+		game->auxy -= 1;
+	if (game->map[game->y + 1][game->x] == 'E')
+		game->auxy += 1;
+	if (game->map[game->y][game->x - 1] == 'E')
+		game->auxx -= 1;
+	if (game->map[game->y][game->x + 1] == 'E')
+		game->auxx += 1;
+	game->map[game->auxy][game->auxx] = '1';
+}
+
 void	check_complete(t_game game)
+{
+	search_e(&game);
+	if (game.map[game.y - 1][game.x] != '1')
+	{
+		game.y -= 1;
+		check_complete(game);
+		game.y += 1;
+	}
+	if (game.map[game.y + 1][game.x] != '1')
+	{
+		game.y += 1;
+		check_complete(game);
+		game.y -= 1;
+	}
+	if (game.map[game.y][game.x - 1] != '1')
+	{
+		game.x -= 1;
+		check_complete(game);
+		game.x += 1;
+	}
+	if (game.map[game.y][game.x + 1] != '1')
+	{
+		game.x += 1;
+		check_complete(game);
+		game.x -= 1;
+	}
+}
+/*void	check_complete(t_game game)
 {
 	game.map[game.y][game.x] = '1';
 	if (game.map[game.y - 1][game.x] != '1')
@@ -65,7 +109,7 @@ void	check_complete(t_game game)
 		check_complete(game);
 		game.x -= 1;
 	}
-}
+}*/
 
 void	check_characteres(t_game *game)
 {
@@ -80,15 +124,15 @@ void	check_characteres(t_game *game)
 		{
 			if (!ft_strchr("01PEC\n", game->map[i][j]))
 				invalidchar();
-			if (game->map[i][j] == 'P')
+			if (game->map_cpy[i][j] == 'P')
 			{
 				game->pnum++;
 				game->y = i;
 				game->x = j;
 			}
-			else if (game->map[i][j] == 'C')
+			else if (game->map_cpy[i][j] == 'C')
 				game->cnum++;
-			else if (game->map[i][j] == 'E')
+			else if (game->map_cpy[i][j] == 'E')
 				game->exnum++;
 		}
 	}
@@ -122,14 +166,18 @@ void	check_limits(t_game game)
 	}
 }
 
-void	check_map(t_game game)
+void	check_map(t_game *game)
 {
-	check_limits(game);
-	check_characteres(&game);
-	if (game.pnum != 1 || game.exnum != 1)
+	game->pnum = 0;
+	game->cnum = 0;
+	game->exnum = 0;
+
+	check_limits(*game);
+	check_characteres(game);
+	if (game->pnum != 1 || game->exnum != 1)
 		invalidchar();
-	else if (game.cnum < 1)
+	else if (game->cnum < 1)
 		invalidchar();
-	check_complete(game);
-	check_coins(game);
+	check_complete(*game);
+	check_coins(*game);
 }

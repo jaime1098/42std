@@ -55,6 +55,50 @@ void	check_complete(t_game game)
 		game.x -= 1;
 	}
 }*/
+void	see_x_y(t_game *game)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (++i < (int)game->rows)
+	{
+		j = 0;
+		while (j++ < (int)game->cols)
+		{
+			if (game->map_cpy[i][j] == 'P')
+			{
+				game->y = j;
+				game->x = i;
+			}
+		}
+	}
+}
+
+int	ft_close(t_game *game)
+{
+	mlx_destroy_window(game->mlx, game->mlx_win);
+	exit(0);
+}
+
+char	*ft_strdup(const char *s)
+{
+	int		i;
+	char	*dup;
+	size_t	length;
+
+	length = ft_strlen(s) + 1;
+	i = 0;
+	dup = malloc(length);
+	if (!dup)
+		return (NULL);
+	while (i < (int)length)
+	{
+		dup[i] = s[i];
+		i++;
+	}
+	return (dup);
+}
 
 int	ft_strncmp(const char *str1, const char *str2, size_t n)
 {

@@ -1,11 +1,11 @@
 NAME = so_long
 
 SRCS =	so_long.c so_long_utils.c so_long_map.c get_next_line.c \
-		get_next_line_utils.c errors.c sprites.c
+		get_next_line_utils.c errors.c sprites.c keyboard.c
 
 OBJECTS = $(SRCS:.c=.o)
 
-CFLAGS := -Wall -Wextra -Werror -Imlx
+CFLAGS := -Wall -Wextra -Werror -Imlx 
 REMOVE = rm -f
 CC := cc
 

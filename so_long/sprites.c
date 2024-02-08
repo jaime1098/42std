@@ -16,36 +16,55 @@ void	charge_images(t_game *game)
 {
 	int	width;
 	int	height;
+
+	width = 128;
+	height = 128;
+	game->pj[0] = mlx_xpm_file_to_image(game->mlx, CHARIZARDF, &width, &height);
+	game->pj[1] = mlx_xpm_file_to_image(game->mlx, CHARIZARDB, &width, &height);
+	game->pj[2] = mlx_xpm_file_to_image(game->mlx, CHARIZARDR, &width, &height);
+	game->pj[3] = mlx_xpm_file_to_image(game->mlx, CHARIZARDL, &width, &height);
+	game->grass = mlx_xpm_file_to_image(game->mlx, GRASS, &width, &height);
+	game->wall = mlx_xpm_file_to_image(game->mlx, WATERFALL, &width, &height);
+	game->coin = mlx_xpm_file_to_image(game->mlx, POKEBALL, &width, &height);
+	game->exit = mlx_xpm_file_to_image(game->mlx, CPOKE, &width, &height);
+}
+
+void	draw_map(t_game *game, int x)
+{
 	size_t	i;
 	size_t	j;
-	
-	width = 100;
-	height = 100;
-	game->pj = mlx_xpm_file_to_image(game->mlx, "../sprites/pj.xpm", &width, &height);
-	game->grass = mlx_xpm_file_to_image(game->mlx, "../sprites/grass.xpm", &width, &height);
-	game->wall = mlx_xpm_file_to_image(game->mlx, "../sprites/wall.xpm", &width, &height);
-	game->coin = mlx_xpm_file_to_image(game->mlx, "../sprites/coin.xpm", &width, &height);
-	game->exit = mlx_xpm_file_to_image(game->mlx, "../sprites/exit.xpm", &width, &height);
-	i = 0;
-	while (i < game->rows)
+
+	i = -1;
+	while (++i < game->rows)
 	{
-		j = 0;
-		while (j < game->cols)
+		j = -1;
+		while (++j < game->cols)
 		{
-			if (game->map[i][j] == '1')
-				mlx_put_image_to_window(game->mlx, game->mlx_win, game->wall, j*32, i*32);
-			if (game->map[i][j] == '0') 
-				mlx_put_image_to_window(game->mlx, game->mlx_win, game->grass, j*32, i*32);
-			if (game->map[i][j] == 'P') 
-				mlx_put_image_to_window(game->mlx, game->mlx_win, game->pj, j*32, i*32);
-			if (game->map[i][j] == 'C') 
-				mlx_put_image_to_window(game->mlx, game->mlx_win, game->coin, j*32, i*32);
-			if (game->map[i][j] == 'E') 
-				mlx_put_image_to_window(game->mlx, game->mlx_win, game->exit, j*32, i*32);
-			j++;
+			if (game->map_cpy[i][j] == '1')
+				mlx_put_image_to_window(game->mlx, game->mlx_win, game->wall, j * 128, i * 128);
+			if (game->map_cpy[i][j] == '0') 
+				mlx_put_image_to_window(game->mlx, game->mlx_win, game->grass, j * 128, i * 128);
+			if (game->map_cpy[i][j] == 'P') 
+			{
+				mlx_put_image_to_window(game->mlx, game->mlx_win, game->grass, j * 128, i * 128);
+				mlx_put_image_to_window(game->mlx, game->mlx_win, game->pj[x], j * 128, i * 128);
+			}
+			if (game->map_cpy[i][j] == 'C')
+				{
+					mlx_put_image_to_window(game->mlx, game->mlx_win, game->grass, j * 128, i * 128);
+					mlx_put_image_to_window(game->mlx, game->mlx_win, game->coin, j * 128, i * 128);
+				}
+			if (game->map_cpy[i][j] == 'E')
+			{
+				mlx_put_image_to_window(game->mlx, game->mlx_win, game->grass, j * 128, i * 128);
+				mlx_put_image_to_window(game->mlx, game->mlx_win, game->exit, j * 128, i * 128);
+			}
 		}
-		i++;
 	}
 }
-/*void	inizialite_sprites(t_game *game)
-{}*/
+/*void	exit(t_game *game)
+{
+	if (game->map_cpy[game.x][game.y] == 'E')
+		if (game->coin == 0)
+			ft_close(game)
+}*/

@@ -56,7 +56,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (strcomplete);
 }
 
-int	ft_strlen(char *str)
+int	ft_strlen(const char *str)
 {
 	int	i;
 
