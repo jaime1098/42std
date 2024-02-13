@@ -1,6 +1,7 @@
 NAME = push_swap
 
-SRCS =	push_swap.c
+SRCS =	push_swap.c ft_swap.c ft_push.c ft_rotate.c  ft_rrotate.c \
+		
 
 OBJECTS = $(SRCS:.c=.o)
 

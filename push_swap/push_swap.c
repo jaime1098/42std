@@ -29,28 +29,33 @@ void	create_list(t_node **stack_a, int num)
 	{
 		while(staux->next)
 			staux = staux->next;
-		staux = node;
+		staux->next = node;
 	}
-	printf("%d\n", staux->value);
 }
 
 int	main(int argc, char **argv)
 {
 	t_node	*stack_a;
-	//t_node	*stack_b;
+	t_node	*stack_b;
 	int		num;
 	char	**splited;
 	int		i;
 
 	stack_a = NULL;
-	//stack_b = NULL;
-	i = 0;
+	stack_b = NULL;
+	i = -1;
 	if (argc < 2 || argv[1][0] == '\0')
 		return (0);
 	splited = ft_split(argv[1], ' ');
-	while (splited[i])
+	while (splited[++i])
 	{
-		num = ft_atoi(splited[i++]);
+		num = ft_atoi(splited[i]);
 		create_list(&stack_a, num);
 	}
+	while (stack_a)
+	{
+		printf("%d\n", stack_a->value);
+		stack_a = stack_a->next;
+	}
+	return (0);
 }

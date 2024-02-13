@@ -25,4 +25,13 @@ typedef struct s_node
 	struct s_node	*next;
 }				t_node;
 
+void	push_a(t_node **stack_a, t_node **stack_b);
+void	push_b(t_node **stack_a, t_node **stack_b);
+void	swap_a(t_node **stack_a, t_node **stack_b);
+void	swap_b(t_node **stack_a, t_node **stack_b);
+void	rotate_a(t_node **stack_a, t_node **stack_b);
+void	rotate_b(t_node **stack_a, t_node **stack_b);
+void	rrotate_a(t_node **stack_a, t_node **stack_b);
+void	rrotate_b(t_node **stack_a, t_node **stack_b);
+
 #endif
