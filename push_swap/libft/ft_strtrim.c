@@ -48,7 +48,7 @@ int	ft_needi(char const *s1, char const *set)
 			j = 0;
 			i++;
 		}
-	j++;
+		j++;
 	}
 	return (i);
 }
@@ -72,7 +72,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 			j = ft_strlen(set) - 1;
 			i--;
 		}
-	j--;
+		j--;
 	}
 	trim = ft_createword(s1, auxi, i, j);
 	return (trim);

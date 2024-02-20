@@ -31,9 +31,9 @@ char	*ft_substr(const char *str, unsigned int start, size_t length)
 		return (NULL);
 	while (i < (int)length)
 	{
-	sub[i] = str[start];
-	start++;
-	i++;
+		sub[i] = str[start];
+		start++;
+		i++;
 	}
 	sub[i] = '\0';
 	return (sub);
