@@ -12,6 +12,67 @@
 
 #include "push_swap.h"
 
+void	count_movs(t_node **stack_a, t_variable *variable, int search)
+{
+	t_node	*aux;
+	t_node	*find;
+
+	find = NULL;
+	aux = *stack_a;
+	variable->total = 0;
+	variable->racount = 0;
+	while (aux)
+	{
+		variable->total++;
+		if (aux->ideal == search)
+			find = aux;
+		aux = aux->next;
+		if (!find)
+		variable->racount++;
+	}
+	//printf("total = %d, ra = %d\n", variable->total, variable->racount);
+}
+void	create_list(t_node **stack_a, t_variable variable)
+{
+	t_node	*node;
+	t_node	*staux;
+
+	node = (t_node *) malloc (sizeof(t_node));
+	if (!node)
+		return ;
+	node->value = variable.num;
+	node->next = NULL;
+	staux = *stack_a;
+	if (!*stack_a)
+		*stack_a = node;
+	else
+	{
+		while (staux->next)
+			staux = staux->next;
+		staux->next = node;
+	}
+}
+
+void	read_args(char **argv, t_variable *variable, t_node **stack_a)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (argv[++i])
+	{
+		j = 0;
+		variable->splited = ft_split(argv[i], ' ');
+		while (variable->splited[j])
+		{
+			variable->num = ft_atoi(variable->splited[j]);
+			create_list(stack_a, *variable);
+			j++;
+		}
+	}
+	free (variable->splited);
+}
+
 void	get_ideal(t_node **stack_a, t_variable *variable)
 {
 	t_node	*list;
@@ -40,37 +101,32 @@ void	get_ideal(t_node **stack_a, t_variable *variable)
 	}
 }
 
-void	ft_order(t_node **stack_a, t_node **stack_b)
+void	ft_order(t_node **stack_a, t_node **stack_b, t_variable *variable)
 {
-	t_node *sexo;
-
-	sexo = *stack_a;
-	while (sexo->ideal != 1)
-		rotate_a(stack_a);
-	print_stacks(*stack_a, *stack_b);
-	push_b(stack_a, stack_b);
-	print_stacks(*stack_a, *stack_b);
-}
-
-void	create_list(t_node **stack_a, t_variable variable)
-{
-	t_node	*node;
-	t_node	*staux;
-
-	node = (t_node *) malloc (sizeof(t_node));
-	if (!node)
-		return ;
-	node->value = variable.num;
-	node->next = NULL;
-	staux = *stack_a;
-	if (!*stack_a)
-		*stack_a = node;
-	else
+	t_node	*aux_a;
+	int		search;
+	//t_node *aux_b;
+	search = 1;
+	aux_a = *stack_a;
+	variable->ideal--;
+	//print_stacks(*stack_a, *stack_b);
+	while (variable->ideal > search)
 	{
-		while (staux->next)
-			staux = staux->next;
-		staux->next = node;
+		count_movs(stack_a, variable, search);
+		if (variable->total - variable->racount > variable->total / 2)
+			rotate_a(stack_a);
+		else
+			rrotate_a(stack_a);
+		aux_a = *stack_a;
+		if (aux_a->ideal == search)
+		{
+			push_b(stack_a, stack_b);
+			search++;
+		}
 	}
+	while (variable->ideal-- > 1)
+		push_a(stack_a, stack_b);
+	//print_stacks(*stack_a, *stack_b);
 }
 
 int	main(int argc, char **argv)
@@ -85,16 +141,13 @@ int	main(int argc, char **argv)
 	i = -1;
 	if (argc < 2 || argv[1][0] == '\0')
 		return (0);
-	variable.splited = ft_split(argv[1], ' ');
-	while (variable.splited[++i])
-	{
-		variable.num = ft_atoi(variable.splited[i]);
-		create_list(&stack_a, variable);
-	}
+	read_args(argv, &variable, &stack_a);
 	variable.min = INT_MAX;
 	variable.max = INT_MIN;
 	variable.ideal = 1;
 	get_ideal(&stack_a, &variable);
-	ft_order(&stack_a, &stack_b);
+	//print_stacks(stack_a, stack_b);
+	ft_order(&stack_a, &stack_b, &variable);
+	//print_stacks(stack_a, stack_b);
 	return (0);
 }

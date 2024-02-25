@@ -26,6 +26,8 @@ typedef struct s_variable
 	int		max;
 	int		num;
 	int		ideal;
+	int		total;
+	int		racount;
 }				t_variable;
 
 typedef struct s_node
@@ -36,9 +38,9 @@ typedef struct s_node
 }				t_node;
 
 void	get_ideal(t_node **stack_a, t_variable *variable);
-void	ft_order(t_node **stack_a, t_node **stack_b);
+void	ft_order(t_node **stack_a, t_node **stack_b, t_variable *variable);
+void	count_movs(t_node **stack_a, t_variable *variable, int search);
 void	print_stacks(t_node *stack_a, t_node *stack_b);
-t_node	*ft_nodelast(t_node *lst);
 void	push_a(t_node **stack_a, t_node **stack_b);
 void	push_b(t_node **stack_a, t_node **stack_b);
 void	swap_a(t_node **stack_a);

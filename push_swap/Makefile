@@ -30,10 +30,13 @@ fclean: clean
 clear:
 	clear
 
-run: clear re
+run: re clear
 	./$(NAME) "9 7 8 4 6 3 5 2 1"
 
 n: clear
 	norminette
+
+v: re clear
+	bash ./../pocho_tester/push_swap_test.sh -v 100
 
 re: fclean all
