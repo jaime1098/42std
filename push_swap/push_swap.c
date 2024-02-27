@@ -28,10 +28,10 @@ void	count_movs(t_node **stack_a, t_variable *variable, int search)
 			find = aux;
 		aux = aux->next;
 		if (!find)
-		variable->racount++;
+			variable->racount++;
 	}
-	//printf("total = %d, ra = %d\n", variable->total, variable->racount);
 }
+
 void	create_list(t_node **stack_a, t_variable variable)
 {
 	t_node	*node;
@@ -101,34 +101,6 @@ void	get_ideal(t_node **stack_a, t_variable *variable)
 	}
 }
 
-void	ft_order(t_node **stack_a, t_node **stack_b, t_variable *variable)
-{
-	t_node	*aux_a;
-	int		search;
-	//t_node *aux_b;
-	search = 1;
-	aux_a = *stack_a;
-	variable->ideal--;
-	//print_stacks(*stack_a, *stack_b);
-	while (variable->ideal > search)
-	{
-		count_movs(stack_a, variable, search);
-		if (variable->total - variable->racount > variable->total / 2)
-			rotate_a(stack_a);
-		else
-			rrotate_a(stack_a);
-		aux_a = *stack_a;
-		if (aux_a->ideal == search)
-		{
-			push_b(stack_a, stack_b);
-			search++;
-		}
-	}
-	while (variable->ideal-- > 1)
-		push_a(stack_a, stack_b);
-	//print_stacks(*stack_a, *stack_b);
-}
-
 int	main(int argc, char **argv)
 {
 	t_node		*stack_a;
@@ -146,8 +118,6 @@ int	main(int argc, char **argv)
 	variable.max = INT_MIN;
 	variable.ideal = 1;
 	get_ideal(&stack_a, &variable);
-	//print_stacks(stack_a, stack_b);
 	ft_order(&stack_a, &stack_b, &variable);
-	//print_stacks(stack_a, stack_b);
 	return (0);
 }

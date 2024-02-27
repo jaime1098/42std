@@ -21,6 +21,7 @@ void	push_a(t_node **stack_a, t_node **stack_b)
 	if (!new_node)
 		write(2, "error al crear nodo\n", 20);
 	new_node->value = (*stack_b)->value;
+	new_node->ideal = (*stack_b)->ideal;
 	new_node->next = (*stack_a);
 	*stack_a = new_node;
 	temp = *stack_b;
@@ -38,6 +39,7 @@ void	push_b(t_node **stack_a, t_node **stack_b)
 	if (!new_node)
 		write(2, "error al crear nodo\n", 20);
 	new_node->value = (*stack_a)->value;
+	new_node->ideal = (*stack_a)->ideal;
 	new_node->next = (*stack_b);
 	*stack_b = new_node;
 	temp = *stack_a;

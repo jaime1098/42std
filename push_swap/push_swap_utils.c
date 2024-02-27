@@ -21,6 +21,22 @@ t_node	*ft_nodelast(t_node *lst)
 	return (lst);
 }
 
+void	print_stack_a(t_node *stack_a)
+{
+	if (!stack_a)
+		stack_a = NULL;
+	printf("Stack A:\n");
+	while (stack_a != NULL)
+	{
+		if (stack_a)
+		{
+			printf("%d\n", stack_a->value);
+			stack_a = stack_a->next;
+		}
+	}
+	printf("\n");
+}
+
 void	print_stacks(t_node *stack_a, t_node *stack_b)
 {
 	if (!stack_b)
