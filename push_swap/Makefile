@@ -33,10 +33,13 @@ clear:
 run: re clear
 	./$(NAME) "9 7 8 4 6 3 5 2 1"
 
+wc: re clear
+	./$(NAME) "9 7 8 4 6 3 5 2 1" | wc -l
+
 n: clear
 	norminette
 
 v: re clear
 	bash ./../pocho_tester/push_swap_test.sh -v 100
 
-re: fclean all
+re: fclean all clear

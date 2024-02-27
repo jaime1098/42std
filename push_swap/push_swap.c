@@ -12,13 +12,13 @@
 
 #include "push_swap.h"
 
-void	count_movs(t_node **stack_a, t_variable *variable, int search)
+int	count_movs(t_node **stack_a, t_variable *variable, int search)
 {
 	t_node	*aux;
 	t_node	*find;
 
-	find = NULL;
 	aux = *stack_a;
+	find = NULL;
 	variable->total = 0;
 	variable->racount = 0;
 	while (aux)
@@ -30,6 +30,7 @@ void	count_movs(t_node **stack_a, t_variable *variable, int search)
 		if (!find)
 			variable->racount++;
 	}
+	return (variable->racount + 1);
 }
 
 void	create_list(t_node **stack_a, t_variable variable)
@@ -106,11 +107,9 @@ int	main(int argc, char **argv)
 	t_node		*stack_a;
 	t_node		*stack_b;
 	t_variable	variable;
-	int			i;
 
 	stack_a = NULL;
 	stack_b = NULL;
-	i = -1;
 	if (argc < 2 || argv[1][0] == '\0')
 		return (0);
 	read_args(argv, &variable, &stack_a);
@@ -118,6 +117,8 @@ int	main(int argc, char **argv)
 	variable.max = INT_MIN;
 	variable.ideal = 1;
 	get_ideal(&stack_a, &variable);
+	//print_stacks(stack_a, stack_b);
 	ft_order(&stack_a, &stack_b, &variable);
+	//print_stacks(stack_a, stack_b);
 	return (0);
 }
